@@ -15,6 +15,15 @@ io.on("connection", socket => {
         console.log(userObj)
         socket.broadcast.emit('broadcast',userObj, user);
     })
+
+    socket.on("chatting", data => {
+        socket.broadcast.emit("msg", data);
+    })
+
+    socket.on("privateL", (msg, reciever) => {
+        console.log(userObj[reciever])
+        socket.to(`${userObj[reciever]}`).emit("privateMsg", msg, reciever);
+    })
 })
 
 server.listen(PORT, () => {
